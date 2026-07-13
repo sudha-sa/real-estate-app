@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "PropFinder",
+    "slug": "real-estate-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#4169E1"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.propfinder.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundColor": "#4169E1"
+      },
+      "package": "com.propfinder.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "scheme": "propfinder",
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      [
+        "expo-image",
+        {
+          "photosPermission": "Allow PropFinder to access your photos"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
