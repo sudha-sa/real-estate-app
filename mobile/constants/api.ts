@@ -1,10 +1,5 @@
-import Constants from 'expo-constants';
-
-// For local development: use your machine's local IP
-// Run: ipconfig getifaddr en0  (on Mac) to get your IP
-const LOCAL_IP = '172.28.188.18'; // <-- Change this to your machine IP
-
-export const API_BASE_URL = `http://${LOCAL_IP}:5001/api`;
+// Android Emulator connects to your PC's localhost via 10.0.2.2
+export const API_BASE_URL = 'http://10.0.2.2:5001/api';
 
 export const ENDPOINTS = {
   // Auth

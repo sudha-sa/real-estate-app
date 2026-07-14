@@ -168,7 +168,7 @@ const QuestionnaireModal = ({ visible, onClose, onComplete }: QuestionnaireModal
     setCurrentIndex(0);
     setAnswers({});
     try {
-      const res = await api.get('/api/ai/questionnaire/questions');
+      const res = await api.get('/ai/questionnaire/questions');
       setQuestions(res.data.questions || res.data || []);
     } catch {
       setQuestions([
@@ -310,7 +310,7 @@ export default function AIAssistantScreen() {
 
   const fetchSuggestions = async () => {
     try {
-      const res = await api.get('/api/ai/suggestions');
+      const res = await api.get('/ai/suggestions');
       setSuggestions(res.data.suggestions || res.data || []);
     } catch {
       setSuggestions([
@@ -331,7 +331,7 @@ export default function AIAssistantScreen() {
     setIsTyping(true);
 
     try {
-      const res = await api.post('/api/ai/chat', { query: query.trim() });
+      const res = await api.post('/ai/chat', { query: query.trim() });
       const { message, properties } = res.data;
       const aiMsg: Message = {
         id: uid(),
@@ -370,7 +370,7 @@ export default function AIAssistantScreen() {
     setMessages((prev) => [summaryMsg, ...prev]);
 
     try {
-      const res = await api.post('/api/ai/questionnaire', { answers });
+      const res = await api.post('/ai/questionnaire', { answers });
       const { message, properties } = res.data;
       const aiMsg: Message = {
         id: uid(),

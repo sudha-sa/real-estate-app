@@ -183,7 +183,7 @@ export default function NotificationsScreen() {
   const fetchNotifications = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
     try {
-      const res = await api.get('/api/notifications');
+      const res = await api.get('/notifications');
       setNotifications(res.data.notifications || res.data || []);
     } catch {
       // keep existing or empty
@@ -198,7 +198,7 @@ export default function NotificationsScreen() {
   const handleMarkAllRead = async () => {
     setMarkingAll(true);
     try {
-      await api.put('/api/notifications/read-all');
+      await api.put('/notifications/read-all');
       setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
     } catch {
       Alert.alert('Error', 'Could not mark all as read.');
@@ -209,7 +209,7 @@ export default function NotificationsScreen() {
 
   const handleDelete = async (id: string) => {
     try {
-      await api.delete(`/api/notifications/${id}`);
+      await api.delete(`/notifications/${id}`);
       setNotifications((prev) => prev.filter((n) => n._id !== id));
     } catch {
       Alert.alert('Error', 'Could not delete notification.');
