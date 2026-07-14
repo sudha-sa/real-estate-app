@@ -31,8 +31,12 @@ interface PropertyCard {
   _id: string;
   title: string;
   price: number;
-  location: string;
+  priceUnit?: string;
+  location: { city: string; area: string; state?: string; address?: string } | string;
   images: string[];
+  type?: string;
+  bhk?: number;
+  status?: string;
 }
 
 interface Message {
@@ -57,10 +61,10 @@ interface Question {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-const formatPrice = (price: number) => {
-  if (price >= 10000000) return `₹${(price / 10000000).toFixed(1)}Cr`;
-  if (price >= 100000) return `₹${(price / 100000).toFixed(0)}L`;
-  return `₹${price.toLocaleString()}`;
+const formatPrice = (price: number, unit?: string) => {
+  if (unit === 'Crore' || price >= 100) return `₹${(price / 100).toFixed(1)}Cr`;
+  return `₹${price}L`;
+
 };
 
 const uid = () => Math.random().toString(36).slice(2);
@@ -106,8 +110,12 @@ const PropertyMiniCard = ({ property, onPress }: { property: PropertyCard; onPre
     />
     <View style={styles.propCardInfo}>
       <Text style={styles.propCardTitle} numberOfLines={1}>{property.title}</Text>
-      <Text style={styles.propCardLocation} numberOfLines={1}>📍 {property.location}</Text>
-      <Text style={styles.propCardPrice}>{formatPrice(property.price)}</Text>
+      <Text style={styles.propCardLocation} numberOfLines={1}>
+        📍 {typeof property.location === 'object'
+          ? `${property.location?.area}, ${property.location?.city}`
+          : property.location}
+      </Text>
+      <Text style={styles.propCardPrice}>₹{property.price}{(property as any).priceUnit === 'Crore' ? ' Cr' : 'L'}</Text>
     </View>
     <LinearGradient colors={[COLORS.primary, COLORS.primaryDark]} style={styles.propCardBtn}>
       <Text style={styles.propCardBtnText}>View</Text>
