@@ -1,153 +1,219 @@
-# 🏠 PropFinder — Real Estate Mobile App
+# PropFinder — Real Estate Mobile Application
 
-A full-stack real estate mobile application built with **React Native (Expo)** and **Node.js + Express + MongoDB**.
-
-![App Theme](https://via.placeholder.com/800x200/4169E1/FFFFFF?text=PropFinder+%E2%80%94+Real+Estate+App)
+> Full-stack real estate mobile app built with **React Native (Expo)** + **Node.js/Express** + **MongoDB**
 
 ---
 
-## 📋 Tech Stack
+## 📱 App Overview
+
+PropFinder is a feature-rich real estate mobile application that allows users to discover, save, and schedule visits to properties across major Indian cities. It includes an AI-powered property search assistant, builder contact system, and construction progress tracking.
+
+---
+
+## 🏗️ Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Mobile App | React Native (Expo Managed) |
-| Navigation | Expo Router (file-based) |
-| State Management | Zustand |
-| HTTP Client | Axios |
-| Backend | Node.js + Express.js |
-| Database | MongoDB (Mongoose) |
-| Authentication | JWT (JSON Web Tokens) |
-| AI Feature | Rule-based NLP Engine (no external API needed) |
+| **Mobile (Frontend)** | React Native (Expo Managed Workflow) |
+| **Navigation** | Expo Router (file-based routing) |
+| **State Management** | Zustand |
+| **HTTP Client** | Axios |
+| **Backend** | Node.js + Express.js |
+| **Database** | MongoDB (Atlas / Local) |
+| **Authentication** | JWT (JSON Web Tokens) |
+| **AI Engine** | Custom Rule-based NLP (no external API) |
 
 ---
 
-## ✨ Features
+## ✨ Features Implemented
 
-- 🔐 **Authentication** — Register, Login, JWT-based session management
-- 🏠 **Home** — Featured carousel, property feed, city filters
-- 🔍 **Explore** — Advanced search with filters (BHK, price, city, status, amenities)
-- ❤️ **Saved** — Save/unsave properties with persistent bookmarks
-- 🤖 **AI Assistant** — Text chat + interactive questionnaire for property recommendations
-- 📋 **Property Detail** — Full property info, image carousel, amenities, builder contact
-- 🏗️ **Construction Progress** — 6-stage visual timeline with status indicators
-- 📅 **Site Visit Booking** — Calendar date selection, time slots, confirmation
-- 👤 **Profile Management** — Edit profile, preferences, notification settings
-- 📊 **My Visits** — Upcoming & past visits with reschedule/cancel
+### Core Modules
+- **Onboarding** — 3-screen animated walkthrough
+- **Authentication** — Register, Login, JWT sessions, Logout
+- **Home** — Featured carousel, city filters, property feed
+- **Explore** — Advanced search with filters (BHK, price, type, city, status)
+- **Saved Properties** — Save/unsave with persistent bookmarks
+- **Property Detail** — Image carousel, amenities, builder contact, specs
+- **Construction Progress** — 6-stage visual timeline tracker
+- **Site Visit Booking** — Date picker, time slots, confirmation screen
+- **Notifications** — Real-time alerts with mark-read and delete
+- **Profile** — Edit profile, preferences, notification settings
+- **My Visits** — Upcoming/past visits with reschedule and cancel
+
+### AI Feature
+- **Text Chat** — Natural language property search ("2 BHK under 80L in Pune")
+- **Smart Questionnaire** — 5-step guided search (budget → type → city → amenities → timeline)
+- **Quick Suggestions** — Pre-built search chips for common queries
+- **No external AI API** — Pure rule-based NLP engine (no quota/billing)
 
 ---
 
-## 🚀 Getting Started
+## 📂 Project Structure
+
+```
+real-estate-app/
+├── backend/                    # Node.js + Express API server
+│   ├── src/
+│   │   ├── controllers/        # Business logic
+│   │   │   ├── authController.js
+│   │   │   ├── propertyController.js
+│   │   │   ├── visitController.js
+│   │   │   ├── notificationController.js
+│   │   │   └── aiController.js
+│   │   ├── models/             # MongoDB Mongoose schemas
+│   │   │   ├── User.js
+│   │   │   ├── Property.js
+│   │   │   ├── SavedProperty.js
+│   │   │   ├── SiteVisit.js
+│   │   │   └── Notification.js
+│   │   ├── routes/             # Express API routes
+│   │   ├── middleware/         # JWT auth middleware
+│   │   ├── seed/               # Database seed script
+│   │   └── server.js           # Entry point
+│   ├── .env.example
+│   └── package.json
+├── mobile/                     # React Native Expo app
+│   ├── app/
+│   │   ├── (auth)/             # Login, Register screens
+│   │   ├── (tabs)/             # Home, Explore, Saved, Profile tabs
+│   │   ├── property/           # Detail, Construction, Book Visit
+│   │   ├── ai-assistant.tsx    # AI chat screen
+│   │   ├── notifications.tsx
+│   │   └── profile/            # Edit, Visits, Preferences
+│   ├── components/             # Reusable UI components
+│   ├── stores/                 # Zustand state stores
+│   ├── services/               # Axios API service
+│   ├── constants/              # Theme, API config
+│   └── package.json
+├── database/                   # MongoDB dump files
+│   ├── properties.json         # 15 seed properties
+│   └── users.json              # 2 test user accounts
+└── README.md
+```
+
+---
+
+## 🚀 Setup & Installation
 
 ### Prerequisites
 
 - Node.js v18+
 - npm v9+
+- Android Studio (for Android emulator) or Expo Go app
 - MongoDB Atlas account (free) or local MongoDB
-- Expo Go app on your phone (for testing)
 
 ---
 
-## ⚙️ Backend Setup
-
-### 1. Navigate to backend directory
+### Step 1 — Clone the Repository
 
 ```bash
-cd real-estate-app/backend
+git clone https://github.com/sudha-sa/real-estate-app.git
+cd real-estate-app
 ```
 
-### 2. Install dependencies
+---
+
+### Step 2 — Backend Setup
 
 ```bash
+cd backend
 npm install
 ```
 
-### 3. Configure environment variables
+Create your `.env` file:
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env`:
+Edit `backend/.env`:
+
 ```env
-PORT=5000
+PORT=5001
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/realestatedb
 JWT_SECRET=real_estate_super_secret_jwt_key_2024
 JWT_EXPIRE=7d
 NODE_ENV=development
 ```
 
-> **MongoDB Atlas Setup:**
-> 1. Go to [mongodb.com/cloud/atlas](https://mongodb.com/cloud/atlas)
-> 2. Create a free cluster
-> 3. Create a database user
-> 4. Whitelist your IP (0.0.0.0/0 for dev)
-> 5. Copy the connection string to MONGODB_URI
+> **MongoDB Atlas (Free):**
+> 1. Visit [cloud.mongodb.com](https://cloud.mongodb.com) → Create free M0 cluster
+> 2. Database Access → Add user (e.g. `realestate` / `realestate123`)
+> 3. Network Access → Allow `0.0.0.0/0`
+> 4. Connect → Drivers → Copy connection string
 
-### 4. Seed the database
+**Seed the database:**
 
 ```bash
 npm run seed
 ```
 
-This creates:
-- ✅ 15 property listings (Mumbai, Bangalore, Pune, Delhi, Hyderabad)
-- ✅ 2 test user accounts
-- ✅ Sample notifications and site visits
-
-### 5. Start the backend
+**Start the backend:**
 
 ```bash
 npm run dev
 ```
 
-Backend runs at: `http://localhost:5000`
-
-Health check: `http://localhost:5000/api/health`
+✅ Backend running at: `http://localhost:5001`
+✅ Health check: `http://localhost:5001/api/health`
 
 ---
 
-## 📱 Mobile App Setup
-
-### 1. Navigate to mobile directory
+### Step 3 — Mobile App Setup
 
 ```bash
-cd real-estate-app/mobile
-```
-
-### 2. Install dependencies
-
-```bash
+cd ../mobile
 npm install --legacy-peer-deps
 ```
 
-### 3. Configure API URL
-
-Open `constants/api.ts` and set your machine's local IP:
-
-```typescript
-const LOCAL_IP = '192.168.1.100'; // Replace with your IP
-```
-
-To find your IP:
-```bash
-# Mac/Linux
-ipconfig getifaddr en0
-
-# Windows
-ipconfig
-```
-
-### 4. Start the Expo app
+**Run on Android Emulator:**
 
 ```bash
-npx expo start
+npx expo start --clear --android
 ```
 
-### 5. Run on device
+**Run on iOS Simulator (Mac only):**
 
-- **iOS/Android Phone**: Install [Expo Go](https://expo.dev/client) and scan the QR code
-- **iOS Simulator**: Press `i` in terminal
-- **Android Emulator**: Press `a` in terminal
+```bash
+npx expo start --clear --ios
+```
+
+**Run on Real Device (Expo Go App):**
+
+```bash
+npx expo start --clear
+```
+
+Then scan the QR code with the Expo Go app on your phone.
+
+> ⚠️ **For real device:** Update `mobile/constants/api.ts` — change `localhost` to your machine's local IP (`ipconfig getifaddr en0` on Mac)
+
+---
+
+## 🗄️ Database Import
+
+The `database/` folder contains JSON dump files for quick setup.
+
+### Import using mongoimport:
+
+```bash
+# Import Properties (15 records)
+mongoimport --uri="your-mongodb-uri" \
+  --collection=properties \
+  --file=database/properties.json \
+  --jsonArray
+
+# Import Users (2 records)
+mongoimport --uri="your-mongodb-uri" \
+  --collection=users \
+  --file=database/users.json \
+  --jsonArray
+```
+
+> **Alternatively**, run the seed script which auto-populates everything:
+> ```bash
+> cd backend && npm run seed
+> ```
 
 ---
 
@@ -157,7 +223,7 @@ npx expo start
 Email:    test@realestate.com
 Password: Test@123
 
-Email:    priya@realestate.com  
+Email:    priya@realestate.com
 Password: Test@123
 ```
 
@@ -167,61 +233,93 @@ Password: Test@123
 
 ### Base URL
 ```
-http://localhost:5000/api
+http://localhost:5001/api
 ```
 
-### Auth Endpoints
+### Authentication
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/auth/register` | Register new user |
-| POST | `/auth/login` | Login & get JWT |
-| GET | `/auth/me` | Get current user |
+| POST | `/auth/login` | Login and get JWT token |
+| GET | `/auth/me` | Get current user profile |
 | PUT | `/auth/profile` | Update profile |
-| PUT | `/auth/change-password` | Change password |
 
-### Property Endpoints
+### Properties
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/properties` | List with filters |
-| GET | `/properties/featured` | Featured properties |
-| GET | `/properties/:id` | Property detail |
-| GET | `/properties/saved` | User's saved list |
-| POST | `/properties/:id/save` | Save property |
-| DELETE | `/properties/:id/save` | Unsave property |
+| GET | `/properties` | List properties with filters |
+| GET | `/properties/featured` | Get featured properties |
+| GET | `/properties/:id` | Get property detail |
+| GET | `/properties/saved` | Get user saved list |
+| POST | `/properties/:id/save` | Save a property |
+| DELETE | `/properties/:id/save` | Remove from saved |
 
-### Query Parameters for GET /properties
+**Filter Query Params for GET /properties:**
 ```
-?city=Mumbai&bhk=3&status=Ready to Move&minPrice=50&maxPrice=200&sort=price_asc&page=1&limit=10
+?city=Mumbai&bhk=3&type=Apartment&status=Ready to Move
+&minPrice=50&maxPrice=200&sort=price_asc&page=1&limit=10
 ```
 
-### Site Visit Endpoints
+### Site Visits
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/visits` | Book site visit |
+| POST | `/visits` | Book a site visit |
 | GET | `/visits` | Get user's visits |
-| PUT | `/visits/:id/reschedule` | Reschedule visit |
-| DELETE | `/visits/:id` | Cancel visit |
+| PUT | `/visits/:id/reschedule` | Reschedule a visit |
+| DELETE | `/visits/:id` | Cancel a visit |
 
-### AI Endpoints
+### Notifications
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/ai/chat` | AI text query |
-| POST | `/ai/questionnaire` | Process questionnaire answers |
-| GET | `/ai/suggestions` | Get smart suggestions |
-| GET | `/ai/questionnaire/questions` | Get questionnaire questions |
+| GET | `/notifications` | Get user notifications |
+| PUT | `/notifications/read-all` | Mark all as read |
+| DELETE | `/notifications/:id` | Delete a notification |
+
+### AI Assistant
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/ai/chat` | Send text query to AI |
+| GET | `/ai/suggestions` | Get smart suggestion chips |
+| GET | `/ai/questionnaire/questions` | Get questionnaire steps |
+| POST | `/ai/questionnaire` | Submit questionnaire answers |
+
+**AI Chat Example:**
+```json
+POST /api/ai/chat
+{
+  "query": "2 BHK under 80 lakhs in Bangalore with gym"
+}
+```
 
 ---
 
-## 🗄️ Database Schema
+## 🤖 AI Engine — How It Works
+
+The AI uses a **100% custom rule-based NLP engine** — no OpenAI, Gemini, or any paid API:
+
+```
+User Input → Keyword Parser → MongoDB Query Builder → Property Results
+```
+
+**Supported query patterns:**
+- BHK: "2 BHK", "3BHK", "studio", "villa"
+- City: "Mumbai", "Bangalore", "Pune", "Delhi", "Hyderabad"
+- Budget: "under 80 lakhs", "50L to 1Cr", "above 2 crore"
+- Status: "ready to move", "under construction", "new launch"
+- Amenities: "with pool", "gym", "parking", "garden"
+- Luxury: "luxury", "premium"
+
+---
+
+## 🗃️ Database Schema
 
 ### User
 ```json
 {
   "name": "string",
   "email": "string (unique)",
-  "password": "string (hashed)",
+  "password": "string (bcrypt hashed)",
   "phone": "string",
-  "avatar": "string",
   "locationPreference": "string",
   "preferredTypes": ["string"],
   "budgetRange": { "min": "number", "max": "number" },
@@ -233,114 +331,83 @@ http://localhost:5000/api
 ```json
 {
   "title": "string",
-  "price": "number",
+  "price": "number (in Lakhs)",
   "priceUnit": "Lakh | Crore",
   "type": "Apartment | Villa | Studio | Penthouse | Plot",
   "bhk": "number",
   "sqft": "number",
   "status": "Ready to Move | Under Construction | New Launch",
   "location": { "city": "string", "area": "string", "state": "string" },
-  "images": ["string"],
+  "images": ["string (URL)"],
   "amenities": ["string"],
   "isVerified": "boolean",
   "isFeatured": "boolean",
   "builder": { "name": "string", "phone": "string", "rating": "number" },
-  "constructionProgress": { "stages": [...], "completionPercent": "number" }
+  "constructionProgress": { "stages": [...], "completionPercent": "number" },
+  "rating": "number"
 }
 ```
 
 ---
 
-## 🤖 AI Feature
-
-The AI assistant uses a **rule-based NLP engine** (no external API/key required):
-
-1. **Text Search**: Parses keywords from natural language (BHK type, city, budget, status, amenities) and builds MongoDB query
-2. **Questionnaire**: 5-step guided questionnaire (budget → type → city → amenities → timeline) → returns matching properties
-3. **Smart Suggestions**: Pre-defined suggestion chips for quick searches
-
-Example queries:
-- *"3 BHK under 80 lakhs in Bangalore"*
-- *"luxury villa with swimming pool in Mumbai"*
-- *"ready to move 2 BHK in Pune"*
-
----
-
-## 📂 Project Structure
+## 🏛️ Architecture
 
 ```
-real-estate-app/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/     # Business logic
-│   │   ├── models/          # MongoDB schemas
-│   │   ├── routes/          # API routes
-│   │   ├── middleware/       # Auth middleware
-│   │   ├── seed/            # DB seed script
-│   │   └── server.js        # Entry point
-│   ├── .env.example
-│   └── package.json
-├── mobile/
-│   ├── app/                 # Expo Router screens
-│   │   ├── (auth)/          # Login, Register
-│   │   ├── (tabs)/          # Bottom tabs
-│   │   ├── property/        # Property screens
-│   │   ├── ai-assistant.tsx
-│   │   ├── notifications.tsx
-│   │   └── onboarding.tsx
-│   ├── components/          # Reusable UI components
-│   ├── stores/              # Zustand state
-│   ├── services/            # API service
-│   ├── constants/           # Theme, API config
-│   └── package.json
-└── README.md
+┌─────────────────────────────────┐
+│     React Native App (Expo)     │
+│  Expo Router │ Zustand │ Axios  │
+└────────────────┬────────────────┘
+                 │ HTTP REST
+┌────────────────▼────────────────┐
+│       Express.js API Server     │
+│  Routes │ Controllers │ JWT MW  │
+└────────────────┬────────────────┘
+                 │ Mongoose ODM
+┌────────────────▼────────────────┐
+│           MongoDB Atlas          │
+│  Users │ Properties │ Visits    │
+└─────────────────────────────────┘
 ```
 
 ---
 
-## 📊 Database Dump
+## 📸 Screens
 
-The `database/dump/` directory contains a MongoDB data export.
-
-### Import the dump:
-```bash
-# Using mongorestore
-mongorestore --uri="your-mongodb-uri" database/dump/
-
-# Or using mongoimport for individual collections
-mongoimport --uri="your-uri" --collection=properties --file=database/dump/properties.json
-```
-
----
-
-## 🏗️ Architecture Decisions
-
-- **Expo Managed Workflow**: Fastest setup, OTA updates, cross-platform support
-- **Zustand**: Lightweight state management, minimal boilerplate vs Redux
-- **Expo Router**: File-based routing (similar to Next.js), clean URL structure
-- **JWT Auth**: Stateless authentication, stored in AsyncStorage
-- **MongoDB Atlas**: Managed cloud DB, free tier sufficient for demo
-- **Rule-based AI**: No API key required, works offline, deterministic results
+| Screen | Description |
+|--------|-------------|
+| Onboarding | 3-slide animated intro |
+| Login / Register | JWT auth with validation |
+| Home | Featured carousel + property feed |
+| Explore | Search + advanced filters |
+| Saved | Bookmarked properties |
+| Property Detail | Full info + image slider |
+| Construction Progress | 6-stage visual tracker |
+| Book Site Visit | Calendar + time slot picker |
+| AI Assistant | Chat + guided questionnaire |
+| Notifications | Alerts with read/delete |
+| Profile | Edit + preferences + visits |
 
 ---
 
 ## 🔮 Future Enhancements
 
+- Push notifications (Expo Notifications + FCM)
 - Virtual 360° property tours
-- Real AI (OpenAI/Gemini) integration  
-- Dark mode support
-- Push notifications (Expo Notifications)
-- Property comparison tool
+- Real AI integration (Gemini API)
+- Dark mode
 - EMI/Loan calculator
-- Builder ratings & reviews
-- In-app messaging with builder
+- Property comparison tool
+- In-app builder messaging
+- Google Maps integration
 
 ---
 
-## 👨‍💻 Developer
+## 👨‍💻 Submission
 
-Built as part of React Native Developer Assessment
+- **GitHub:** https://github.com/sudha-sa/real-estate-app
+- **Tech Stack:** React Native (Expo) + Node.js + MongoDB
+- **Deadline:** 14th July, 10:00 PM
 
 ---
 
-*Made with ❤️ using React Native + Node.js*
+*Built with ❤️ for the React Native Developer Assessment*
